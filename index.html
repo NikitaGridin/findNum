@@ -21,10 +21,10 @@
       }
       .activeNum {
         font-size: 68px;
-        background-color: white;
+        background-color: rgb(27, 27, 27);
         border: none;
         text-align: center;
-        color: black;
+        color: white;
         width: 100%;
         font-weight: bold;
       }
@@ -63,12 +63,12 @@
       .countTurn {
         color: white;
         margin-top: 100px;
-        width: 30%;
+        width: 60%;
         margin-left: auto;
         margin-right: auto;
         list-style-type: none;
         padding: 0px;
-        height: 140px;
+        height: 40vh;
         overflow: auto;
         font-size: 24px;
       }
@@ -87,49 +87,81 @@
       .btn {
         font-size: 18px;
         background-color: rgb(218, 37, 27);
+        width: 120px;
+        border-radius: 20px;
+        margin: 0 auto;
         color: white;
         border: none;
         padding: 14px 24px;
         cursor: pointer;
-        display: inline-block;
-        margin-left: 45%;
         margin-top: 30px;
+        text-align: center;
+      }
+      .text {
+        text-align: center;
+        color: white;
+        margin-bottom: 20px;
       }
     </style>
   </head>
   <body>
     <div class="wrapper">
       <div class="content">
-        <h1>Угадай число</h1>
-        <div class="instruction">
-          Угадай число от 0 до <input type="text" class="setNum" />
-        </div>
-        <input class="activeNum" type="number" autofocus maxlength="100" />
+        <h1>Угадай число от 0 до 100</h1>
+        <br /><br />
+        <div class="text">Введите число</div>
+        <input class="activeNum" type="number" autofocus />
         <div class="btn">Вычислить</div>
-        <ul class="countTurn">
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-          <li>1</li>
-        </ul>
+        <ul class="countTurn"></ul>
       </div>
     </div>
     <script>
       const btn = document.querySelector(".btn");
-      const setValue = document.querySelector(".setNum");
+      const setNum = document.querySelector(".setNum");
       const activeNum = document.querySelector(".activeNum");
+      const countTurn = document.querySelector(".countTurn");
+      const text = document.querySelector(".text");
+      const a = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+      console.log(a);
+      let i = 0;
       btn.addEventListener("click", function () {
-        if (setValue.value) {
-          if (setValue.value < activeNum.value) {
-            console.log("Много");
-          } else {
-            console.log("Мало");
-          }
-        }
+        if (a) {
+          if (activeNum.value) {
+            if (activeNum.value > a) {
+              activeNum.focus();
+              text.innerHTML = "Много";
+              i++;
+              const li = document.createElement("li");
+              countTurn.appendChild(li);
+              li.innerHTML =
+                "Попытка номер: " + i + " Введённое Число :" + activeNum.value;
+              activeNum.value = "";
+            } else if (activeNum.value == a) {
+              text.innerHTML = "Верно";
+              i++;
+
+              const li = document.createElement("li");
+              countTurn.appendChild(li);
+              li.innerHTML =
+                "Попытка номер: " +
+                i +
+                " Введённое Число :" +
+                activeNum.value +
+                " Верно";
+            } else {
+              activeNum.focus();
+
+              text.innerHTML = "Мало";
+              i++;
+              const li = document.createElement("li");
+              countTurn.appendChild(li);
+              li.innerHTML =
+                "Попытка номер: " + i + " Введённое Число :" + activeNum.value;
+
+              activeNum.value = "";
+            }
+          } else alert("Введите искомое число");
+        } else alert("Введите число ограничение");
       });
     </script>
   </body>
